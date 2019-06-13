@@ -1,0 +1,39 @@
+hr{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+img{
+    max-width: 90%;
+}
+.jumbotron{
+    margin-top: 1%;
+}
+
+.thumbnail{
+    text-align: center;
+}
+#footer{
+    text-align: center;
+    margin-top: 5%
+}
+
+#Form{
+margin: 0 auto;
+width: 30%;
+}	
+
+#newCampground{
+    text-align: center;
+}
+
+#navbarNav{
+    float: right;
+}
+
+.container{
+    padding:2%;
+}
+
