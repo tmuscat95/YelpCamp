@@ -1,5 +1,5 @@
 
-	<%include partials/header.ejs%>
+	<%include ../partials/header.ejs%>
 	<div class="jumbotron">
 		<h1>Campgrounds</h1>
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -11,14 +11,15 @@
 		<a href="/campgrounds/new"><button class="btn btn-primary">Add New</button></a>
 	</div>
 
-	<div class="row" style="display:flex flex-wrap:wrap">
+	<div class="row" style="display:flex; flex-wrap:wrap">
 		<%campgrounds.forEach(function(campground){%>
 			<div class="col-md-3 col-sm-6">
-				<div class="thumbnail">
+				<a href='/campgrounds/<%=campground["_id"]%>'>
+					<div class="thumbnail">
 					<img src='<%=campground["imgUrl"]%>' class="img-thumbnail">										
 					<h4><%=campground["name"]%></h4>
-				</div>
+				</div></a>
 			</div>
 		<%});%>
 	</div>
-	<%include partials/footer.ejs%>
+	<%include ../partials/footer.ejs%>
