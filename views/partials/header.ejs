@@ -12,16 +12,19 @@
 		<a class="navbar-brand" href="/">YelpCamp</a>
 		 <div class="collapse navbar-collapse" id="navbarNav">
 		      <ul class="navbar-nav ml-auto">
-		    
-			  <li class="nav-item">
-		        <a class="nav-link" href="/Campgrounds">Campgrounds</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Pricing</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-		      </li>
+			 
+				<%if(currentUser){%>
+		    <li class="nav-item">
+		        <a class="nav-link" href="/logout">Log Out</a>
+				</li>
+				<%}else{%>
+				<li class="nav-item">
+					<a class="nav-link" href="/login">Log In</a>
+			</li>
+		    <li class="nav-item">
+		        <a class="nav-link" href="/register" tabindex="-1" aria-disabled="true">Register</a>
+				</li>
+				<%}%>
 		    </ul>
   		</div>
 	</nav>

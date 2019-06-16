@@ -1,5 +1,7 @@
 var app = require("./expressServer.js");
-var hosts = require("./hosts")
+var passport = require("passport");
+var User = require("./models/user.js");
+var hosts = require("./hosts");
 var campgroundModel = require("./models/campground.js");
 var commentModel = require("./models/comments.js");
 
@@ -12,11 +14,48 @@ function campground(name,imgUrl,description){
     this.description = description;
 }
 
+//AUTH ROUTES
+app.get("/register",function(req,res){
+    res.render("register.ejs");
+});
+
+app.post("/register",function(req,res){
+    User.register(new User({username:req.body.username}),req.body.password,function(err,user){
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }
+
+        passport.authenticate("local")(req,res,function(){
+            res.redirect("/campgrounds");
+        });
+    });
+});
+
+app.get("/login",function(req,res){
+    res.render("login.ejs");
+});
+
+app.post("/login",passport.authenticate("local",{successRedirect:"/authenticated",failureRedirect:"/"}),function(req,res){});
+
+app.post("logout",function(req,res){
+    passport.logout();
+});
+
+function isLoggedIn(req,res,next){
+    if(req.isLoggedIn()){
+       return next(); 
+    }
+    else redirect("/login");
+}
+///// 
+
+
+//index
 app.get("/",function(req,res){
     res.render("home.ejs");
 });
 
-//index
 app.get("/campgrounds",function(req,res){
 
     campgroundModel.find({},function(err,campgrounds){
@@ -31,7 +70,7 @@ app.get("/campgrounds",function(req,res){
     
 });
 //create
-app.post("/campgrounds",function(req,res){
+app.post("/campgrounds",isLoggedIn,function(req,res){
     
     var n = req.body.name;
     var url = req.body.imgUrl;
@@ -50,7 +89,7 @@ app.post("/campgrounds",function(req,res){
     
 });
 //add new
-app.get("/campgrounds/new",function(req,res){
+app.get("/campgrounds/new",isLoggedIn,function(req,res){
     res.render("campgrounds/new.ejs");
 });
 
@@ -72,13 +111,13 @@ app.get("/campgrounds/:id",function(req,res){
 });
 
 //add comment
-app.get("/campgrounds/:id/add",function(req,res){
+app.get("/campgrounds/:id/add",isLoggedIn,function(req,res){
     res.render("comments/new.ejs",{id:req.params.id});
 });
 
 //create comment
-app.post("/campgrounds/:id",function(req,res){
-    var newComment = new commentModel({author:req.body.comment.author,commentBody:req.body.comment.body});
+app.post("/campgrounds/:id",isLoggedIn,function(req,res){
+    var newComment = new commentModel({author:req.sanitize(req.body.comment.author),commentBody:req.sanitize(req.body.comment.body)});
     newComment.save(function(err,comment){
         if(err){
             console.log(err);
