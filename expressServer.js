@@ -5,10 +5,18 @@ var expressSanitizer = require("express-sanitizer");
 var expressSession = require("express-session");
 var passport = require("passport");
 var localStrategy = require("passport-local");
+
 var User = require("./models/user.js");
 
 var app = express();
 
+app.set("view engine","ejs");
+app.use(expressSanitizer());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static("public"));
+
+//Passport And Authentication
 app.use(expressSession({secret:"mysecret",
                         resave:false,
                         saveUninitialized:false}));
@@ -20,16 +28,13 @@ passport.use(new localStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.set("view engine","ejs");
-app.use(expressSanitizer());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(express.static("public"));
+
 
 app.use(function(req,res,next){
     res.locals.currentUser = req.user;
-    next();
+    return next();
 });
 
+/////////////////////////////
 module.exports = app;
 

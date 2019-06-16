@@ -8,7 +8,13 @@ mongoose.connect("mongodb://"+host+"/yelpcamp");
 var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 var commentSchema = new mongoose.Schema({
     commentBody: String,
-    author: String,
+    author: {
+        id:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        },
+        username: String
+    },
     date:{type:Date, default: Date.now()}
 });
 
