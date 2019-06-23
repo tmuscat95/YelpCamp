@@ -37,3 +37,11 @@ width: 30%;
     padding:2%;
 }
 
+.editBtns{
+    display: inline;
+}
+
+.flash{
+    display: none;
+}
+

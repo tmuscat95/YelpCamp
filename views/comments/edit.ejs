@@ -1,0 +1,10 @@
+<%include ../partials/header.ejs%>
+<form action="/campgrounds/<%=id%>/comment/<%=comment._id%>/?_method=PUT" method="post">
+    <div class="form-group">
+            <label for="exampleFormControlTextarea1"><strong>Edit Comment</strong></label>
+            <div style="display: none;" class="form-group"><input class="form-control" value="<%=comment.author%>" type="text" name="comment[author]"></div>
+            <textarea name="comment[body]" class="form-control" id="exampleFormControlTextarea1" rows="3" required><%=comment.commentBody%></textarea>
+    </div>
+    <div class="form-group"><input class="form-control btn btn-primary" type="submit" text="Submit"></div>
+</form>
+<%include ../partials/footer.ejs%>

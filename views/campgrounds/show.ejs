@@ -5,8 +5,15 @@
     </div>
     <div class="col-md-8">
             <h3><%=campground.name%></h3>
-            <p><%=campground.description%></p>
-            <a class="btn btn-primary btn-sm" href="/campgrounds/<%=campground._id%>/add" role="button">Add Review</a>
+            <p><%= campground.description%></p>
+            <%if(currentUser && campground.author.id.equals(currentUser._id)){%>
+            <a class="btn btn-primary btn-sm editBtns" href="/campgrounds/<%=campground._id%>/add" role="button">Add Review</a>
+            <a class="btn btn-warning btn-sm editBtns" href="/campgrounds/<%=campground._id%>/edit" role="button">Edit</a>
+            <form class="editBtns" action="/campgrounds/<%=campground._id%>?_method=DELETE" method="post">
+              <input type="submit" value="Delete" class="btn btn-danger btn-sm editBtns"></a>
+            </form>
+            <%}%>
+
     </div>
 </div>
 <hr>
@@ -16,13 +23,19 @@
     <div class="col-md-12">
     <div class="card">
             <div class="card-header">
-              <strong><%=comment.author%></strong>
+              <strong><%=comment.author.username%></strong>
             </div>
             <div class="card-body">
               <blockquote class="blockquote mb-0">
                 <p><%=comment.commentBody%></p>
                 <footer class="blockquote-footer"><%=comment.date%> </footer>
               </blockquote>
+              <%if(currentUser && comment.author.id.equals(currentUser._id)){%>
+              <a class="btn btn-warning btn-xs editBtns" href="/campgrounds/<%=campground._id%>/comment/<%=comment._id%>/edit" role="button">Edit</a>
+              <form class="editBtns" action="/campgrounds/<%=campground._id%>/comment/<%=comment._id%>?_method=DELETE" method="post">
+                <input type="submit" value="Delete" class="btn btn-danger btn-xs editBtns"></a>
+              </form>
+              <%}%>
             </div>
           </div>
     </div>

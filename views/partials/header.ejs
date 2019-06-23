@@ -4,6 +4,10 @@
 	<link rel="stylesheet" href="/yelpcamp.css">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 	<title>YelpCamp</title>
 	
 </head>
@@ -13,19 +17,32 @@
 		 <div class="collapse navbar-collapse" id="navbarNav">
 		      <ul class="navbar-nav ml-auto">
 			 
-				<%if(currentUser){%>
-		    <li class="nav-item">
-		        <a class="nav-link" href="/logout">Log Out</a>
+				<%if(currentUser){%>					
+				<li class="nav-item">
+					<a class="nav-link" tabindex="-1" aria-disabled="true"><%=currentUser.username%></a>
+				</li>	
+		    	<li class="nav-item">
+		        	<a class="nav-link" href="/logout">Log Out</a>
 				</li>
 				<%}else{%>
 				<li class="nav-item">
 					<a class="nav-link" href="/login">Log In</a>
-			</li>
+				</li>
 		    <li class="nav-item">
 		        <a class="nav-link" href="/register" tabindex="-1" aria-disabled="true">Register</a>
-				</li>
+			</li>
 				<%}%>
 		    </ul>
   		</div>
 	</nav>
 	<div class="container">
+		<div class="container flash">
+				<%if(success && success.length>0){%>
+				<div class="alert alert-success" role="alert"><%=success%></div>
+				<%}%>
+
+				<%if(error && error.length>0){%>
+				<div class="alert alert-danger" role="alert"><%=error%></div>
+				<%}%>
+
+		</div>
